@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="Img/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grammeowster’s Pizza | Best Pizza in Town</title>
+    <meta
+      name="description"
+      content="Grammeowster’s Pizza – freshly baked brick-oven pizza made with love and extra cheese. Order online or visit us today!"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ['"Playfair Display"', "serif"],
+              body: ["Inter", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                red: "#c0392b",
+                redDark: "#96281b",
+                orange: "#e67e22",
+                cream: "#fdf6ec",
+                dark: "#1a0a00",
+              },
+            },
+            keyframes: {
+              fadeUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideIn: {
+                "0%": { opacity: "0", transform: "translateX(-30px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+              pulse2: {
+                "0%, 100%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.05)" },
+              },
+            },
+            animation: {
+              "fade-up": "fadeUp 0.7s ease both",
+              "slide-in": "slideIn 0.6s ease both",
+              pulse2: "pulse2 3s ease-in-out infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Playfair Display", serif;
+      }
+
+      /* Hero overlay */
+      .hero-bg {
+        background:
+          linear-gradient(
+            135deg,
+            rgba(192, 57, 43, 0.85) 0%,
+            rgba(230, 126, 34, 0.6) 100%
+          ),
+          url("Img/pizza.jpg") center/cover no-repeat;
+      }
+
+      /* Glassmorphism card */
+      .glass {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      /* FAQ transition */
+      .faq-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .faq-body.open {
+        max-height: 300px;
+      }
+
+      /* Scroll-reveal utility */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+
+  <body class="bg-brand-cream text-brand-dark antialiased">
+    <!-- ═══════════════ NAVBAR ═══════════════ -->
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 lg:px-16 flex justify-between items-center"
+    >
+      <a href="index.html" class="flex items-center gap-2 text-white">
+        <img
+          src="Img/logo.png"
+          alt="Grammeowster's Pizza Logo"
+          class="h-32 w-32 object-contain"
+        />
+        <span class="font-heading text-2xl font-bold tracking-wide drop-shadow"
+          >Grammeowster’s Pizza</span
+        >
+      </a>
+      <ul
+        class="hidden md:flex gap-8 text-white font-medium text-sm tracking-widest uppercase"
+      >
+        <li>
+          <a
+            href="index.html"
+            class="hover:text-brand-orange transition font-bold underline underline-offset-4"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a href="menu.html" class="hover:text-brand-orange transition"
+            >Menu</a
+          >
+        </li>
+        <li>
+          <a href="2d-game.html" class="hover:text-brand-orange transition"
+            >Game</a
+          >
+        </li>
+        <li>
+          <a
+            href="order-form.html"
+            class="bg-brand-orange hover:bg-orange-400 transition px-4 py-1.5 rounded-full text-white shadow-md"
+            >Order Now</a
+          >
+        </li>
+      </ul>
+      <!-- Mobile hamburger -->
+      <button
+        id="menu-btn"
+        class="md:hidden text-white focus:outline-none p-1"
+        aria-label="Open menu"
+      >
+        <svg
+          class="w-7 h-7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="hidden fixed top-0 left-0 right-0 bottom-0 z-[60] bg-brand-redDark/95 flex-col items-center justify-center gap-8 text-white text-xl font-heading"
+    >
+      <button
+        id="close-menu"
+        class="absolute top-6 right-6 p-1"
+        aria-label="Close menu"
+      >
+        <svg
+          class="w-8 h-8"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <a href="index.html" class="hover:text-brand-orange transition">Home</a>
+      <a href="menu.html" class="hover:text-brand-orange transition">Menu</a>
+      <a href="2d-game.html" class="hover:text-brand-orange transition">Game</a>
+      <a
+        href="order-form.html"
+        class="bg-brand-orange px-8 py-3 rounded-full hover:bg-orange-400 transition"
+        >Order Now</a
+      >
+    </div>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <header
+      class="hero-bg min-h-screen flex flex-col justify-center items-center text-white text-center px-6 pt-20 relative overflow-hidden"
+    >
+      <!-- Decorative circles -->
+      <div
+        class="absolute top-20 left-10 w-64 h-64 rounded-full bg-white/5 blur-3xl"
+      ></div>
+      <div
+        class="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-brand-orange/20 blur-3xl"
+      ></div>
+
+      <p
+        class="text-black font-semibold tracking-[0.3em] uppercase text-sm mb-4 animate-slide-in"
+      >
+        🔥 Fresh from the brick oven
+      </p>
+      <h1
+        class="font-heading text-5xl md:text-7xl font-black leading-tight drop-shadow-xl animate-fade-up"
+        style="animation-delay: 0.1s"
+      >
+        Best Pizza<br />
+        <span class="text-black">in Town!</span>
+      </h1>
+      <p
+        class="mt-5 max-w-md text-lg text-white/80 animate-fade-up"
+        style="animation-delay: 0.25s"
+      >
+        Freshly baked every day with love and extra cheese — using a secret
+        recipe from our <em>lola</em>.
+      </p>
+      <div
+        class="mt-8 flex gap-4 flex-wrap justify-center animate-fade-up"
+        style="animation-delay: 0.4s"
+      >
+        <a
+          href="menu.html"
+          class="bg-brand-orange hover:bg-orange-400 transition-all duration-300 text-white font-semibold px-8 py-3.5 rounded-full shadow-lg hover:shadow-orange-400/50 hover:scale-105"
+        >
+          🍕 See Menu
+        </a>
+        <a
+          href="order-form.html"
+          class="glass hover:bg-white/20 transition-all duration-300 text-white font-semibold px-8 py-3.5 rounded-full border border-white/30 hover:scale-105"
+        >
+          Order Now →
+        </a>
+      </div>
+
+      <!-- Scroll cue -->
+      <div
+        class="absolute bottom-10 flex flex-col items-center gap-1 text-white/50 text-xs animate-pulse2"
+      >
+        <span>Scroll Down</span>
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </div>
+    </header>
+
+    <!-- ═══════════════ PROMO BANNER ═══════════════ -->
+    <section class="bg-gradient-to-r from-brand-red to-brand-orange py-6 px-6">
+      <div
+        class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-white text-center"
+      >
+        <div class="reveal">
+          <p class="text-sm uppercase tracking-widest font-semibold opacity-80">
+            Limited Time
+          </p>
+          <p class="font-heading text-2xl font-bold">
+            Buy 2 Pizzas, Get 1 FREE 🎉
+          </p>
+        </div>
+        <a
+          href="order-form.html"
+          class="reveal bg-white text-brand-red font-bold px-7 py-3 rounded-full hover:bg-brand-cream hover:scale-105 transition-all duration-300 shadow-md whitespace-nowrap"
+        >
+          Claim Deal
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══════════════ WHY US + MISSION ═══════════════ -->
+    <section class="py-20 px-6 max-w-6xl mx-auto">
+      <p
+        class="text-center text-brand-red font-semibold tracking-widest uppercase text-sm reveal"
+      >
+        Our Story
+      </p>
+      <h2 class="font-heading text-4xl font-bold text-center mt-2 mb-14 reveal">
+        Why Choose Grammeowster’s Pizza?
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div
+          class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-b-4 border-brand-red text-center"
+        >
+          <div class="text-5xl mb-4">🧱</div>
+          <h3 class="font-heading text-xl font-bold text-brand-red mb-3">
+            Brick Oven Baked
+          </h3>
+          <p class="text-gray-600 leading-relaxed text-sm">
+            No frozen dough here. Every pizza is stretched by hand and baked in
+            our traditional wood-fired brick oven for that perfect char.
+          </p>
+        </div>
+        <!-- Card 2 -->
+        <div
+          class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-b-4 border-brand-orange text-center"
+          style="transition-delay: 0.1s"
+        >
+          <div class="text-5xl mb-4">👵</div>
+          <h3 class="font-heading text-xl font-bold text-brand-red mb-3">
+            Lola's Secret Recipe
+          </h3>
+          <p class="text-gray-600 leading-relaxed text-sm">
+            Passed down through generations, our sauce recipe is a closely
+            guarded family secret that gives every bite an unforgettable
+            flavour.
+          </p>
+        </div>
+        <!-- Card 3 -->
+        <div
+          class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-b-4 border-yellow-400 text-center"
+          style="transition-delay: 0.2s"
+        >
+          <div class="text-5xl mb-4">🧀</div>
+          <h3 class="font-heading text-xl font-bold text-brand-red mb-3">
+            Extra Cheese Always
+          </h3>
+          <p class="text-gray-600 leading-relaxed text-sm">
+            We believe cheese is not just a topping — it's a lifestyle. Expect
+            generous, gooey layers on every single slice.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MISSION & VISION ═══════════════ -->
+    <section class="bg-brand-dark py-20 px-6 relative overflow-hidden">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top-left,_rgba(192,57,43,0.3),_transparent_60%)]"
+      ></div>
+      <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 relative z-10">
+        <div class="reveal glass rounded-2xl p-8">
+          <div class="text-4xl mb-4">🎯</div>
+          <h3 class="font-heading text-2xl font-bold text-white mb-3">
+            Our Mission
+          </h3>
+          <p class="text-white/70 leading-relaxed">
+            To give every person a slice of happiness — one pizza at a time. We
+            are committed to quality, freshness, and the kind of flavour that
+            brings people together.
+          </p>
+        </div>
+        <div
+          class="reveal glass rounded-2xl p-8"
+          style="transition-delay: 0.15s"
+        >
+          <div class="text-4xl mb-4">🚀</div>
+          <h3 class="font-heading text-2xl font-bold text-white mb-3">
+            Our Vision
+          </h3>
+          <p class="text-white/70 leading-relaxed">
+            To be the number 1 pizza chain in the solar system. Yes, the whole
+            solar system — starting right here in your neighbourhood.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ STATS ═══════════════ -->
+    <section class="bg-brand-red py-14 px-6">
+      <div
+        class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-white text-center"
+      >
+        <div class="reveal">
+          <p class="font-heading text-4xl font-black">10k+</p>
+          <p class="text-white/70 text-sm mt-1 uppercase tracking-widest">
+            Slices Served
+          </p>
+        </div>
+        <div class="reveal" style="transition-delay: 0.1s">
+          <p class="font-heading text-4xl font-black">4.9⭐</p>
+          <p class="text-white/70 text-sm mt-1 uppercase tracking-widest">
+            Rating
+          </p>
+        </div>
+        <div class="reveal" style="transition-delay: 0.2s">
+          <p class="font-heading text-4xl font-black">12+</p>
+          <p class="text-white/70 text-sm mt-1 uppercase tracking-widest">
+            Pizza Variants
+          </p>
+        </div>
+        <div class="reveal" style="transition-delay: 0.3s">
+          <p class="font-heading text-4xl font-black">∞</p>
+          <p class="text-white/70 text-sm mt-1 uppercase tracking-widest">
+            Cheese
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MINI GAME PROMO ═══════════════ -->
+    <section class="py-20 px-6 bg-brand-dark relative overflow-hidden">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom-right,_rgba(230,126,34,0.25),_transparent_60%)]"
+      ></div>
+      <div
+        class="max-w-5xl mx-auto relative z-10 flex flex-col md:flex-row items-center gap-12"
+      >
+        <!-- Text Side -->
+        <div class="flex-1 text-center md:text-left reveal">
+          <p
+            class="text-brand-orange font-semibold tracking-widest uppercase text-sm mb-3"
+          >
+            🎮 Mini Game
+          </p>
+          <h2
+            class="font-heading text-4xl md:text-5xl font-black text-white mb-5 leading-tight"
+          >
+            Pizza Ingredient<br /><span class="text-brand-orange"
+              >Catcher!</span
+            >
+          </h2>
+          <p class="text-white/60 text-base leading-relaxed mb-8 max-w-md">
+            Think you have what it takes to run a pizza kitchen? Catch falling
+            ingredients, dodge the duds, and rack up the highest score in our
+            fast-paced arcade game. The more you catch, the harder it gets!
+          </p>
+          <a
+            href="2d-game.html"
+            class="inline-flex items-center gap-3 bg-brand-orange hover:bg-orange-400 text-white font-bold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-400/40 text-base"
+          >
+            <span>Play Now</span>
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </a>
+        </div>
+        <!-- Icon / Decorative Side -->
+        <div
+          class="reveal flex-shrink-0 flex items-center justify-center w-52 h-52 rounded-3xl bg-white/5 border border-white/10 shadow-2xl backdrop-blur-sm"
+          style="transition-delay: 0.15s"
+        >
+          <div class="text-center">
+            <div class="text-8xl mb-2">🎮</div>
+            <p
+              class="text-white/40 text-xs uppercase tracking-widest font-semibold"
+            >
+              Free to Play
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ FAQ ═══════════════ -->
+    <section class="py-20 px-6 max-w-3xl mx-auto">
+      <p
+        class="text-center text-brand-red font-semibold tracking-widest uppercase text-sm reveal"
+      >
+        Got Questions?
+      </p>
+      <h2 class="font-heading text-4xl font-bold text-center mt-2 mb-12 reveal">
+        Frequently Asked Questions
+      </h2>
+
+      <div class="space-y-4" id="faq-list">
+        <div
+          class="reveal faq-item bg-white rounded-2xl shadow hover:shadow-md transition overflow-hidden"
+        >
+          <button
+            class="faq-toggle w-full text-left p-5 font-semibold text-brand-dark flex justify-between items-center gap-4"
+          >
+            <span>Do you deliver?</span>
+            <span
+              class="faq-icon text-brand-red text-xl transition-transform duration-300"
+              >+</span
+            >
+          </button>
+          <div class="faq-body px-5 pb-5 text-gray-600 text-sm leading-relaxed">
+            Yes, we deliver fast — or it's free (joke only 😄). We cover the
+            whole city and nearby areas. Check out our Order page for delivery
+            zones!
+          </div>
+        </div>
+
+        <div
+          class="reveal faq-item bg-white rounded-2xl shadow hover:shadow-md transition overflow-hidden"
+          style="transition-delay: 0.1s"
+        >
+          <button
+            class="faq-toggle w-full text-left p-5 font-semibold text-brand-dark flex justify-between items-center gap-4"
+          >
+            <span>Do you have Hawaiian pizza?</span>
+            <span
+              class="faq-icon text-brand-red text-xl transition-transform duration-300"
+              >+</span
+            >
+          </button>
+          <div class="faq-body px-5 pb-5 text-gray-600 text-sm leading-relaxed">
+            Yes we do, and we don't judge you for liking pineapple on pizza. We
+            believe everyone deserves to enjoy pizza their own way! 🍍
+          </div>
+        </div>
+
+        <div
+          class="reveal faq-item bg-white rounded-2xl shadow hover:shadow-md transition overflow-hidden"
+          style="transition-delay: 0.2s"
+        >
+          <button
+            class="faq-toggle w-full text-left p-5 font-semibold text-brand-dark flex justify-between items-center gap-4"
+          >
+            <span>Can I customize my pizza?</span>
+            <span
+              class="faq-icon text-brand-red text-xl transition-transform duration-300"
+              >+</span
+            >
+          </button>
+          <div class="faq-body px-5 pb-5 text-gray-600 text-sm leading-relaxed">
+            Absolutely! You can choose your crust, sauce, toppings, and cheese
+            level. Build your dream pizza on our Order page.
+          </div>
+        </div>
+
+        <div
+          class="reveal faq-item bg-white rounded-2xl shadow hover:shadow-md transition overflow-hidden"
+          style="transition-delay: 0.3s"
+        >
+          <button
+            class="faq-toggle w-full text-left p-5 font-semibold text-brand-dark flex justify-between items-center gap-4"
+          >
+            <span>Are there vegetarian options?</span>
+            <span
+              class="faq-icon text-brand-red text-xl transition-transform duration-300"
+              >+</span
+            >
+          </button>
+          <div class="faq-body px-5 pb-5 text-gray-600 text-sm leading-relaxed">
+            Yes! Our Veggie Delight and several other options are 100%
+            meat-free. Check the Menu for the full vegetarian lineup. 🥦
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CTA STRIP ═══════════════ -->
+    <section
+      class="py-20 px-6 bg-gradient-to-br from-brand-orange via-brand-red to-brand-redDark text-white text-center relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_bottom-right,_rgba(255,255,255,0.07),_transparent_60%)]"
+      ></div>
+      <div class="relative z-10 max-w-2xl mx-auto">
+        <p
+          class="reveal tracking-widest uppercase text-sm text-white/70 font-semibold"
+        >
+          Ready to eat?
+        </p>
+        <h2
+          class="reveal font-heading text-4xl md:text-5xl font-black mt-2 mb-4"
+        >
+          Order Your Perfect Pizza Today
+        </h2>
+        <p class="reveal text-white/80 mb-8">
+          Skip the wait — place your order online and we'll have it piping hot
+          at your door.
+        </p>
+        <a
+          href="order-form.html"
+          class="reveal inline-block bg-white text-brand-red font-bold px-10 py-4 rounded-full hover:bg-brand-cream transition-all duration-300 hover:scale-105 shadow-xl"
+        >
+          Order Now 🍕
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="bg-brand-dark text-white px-6 py-12">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 mb-10">
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <img
+              src="Img/logo.png"
+              alt="Grammeowster's Pizza Logo"
+              class="h-11 w-11 object-contain"
+            />
+            <span class="font-heading text-xl font-bold"
+              >Grammeowster’s Pizza</span
+            >
+          </div>
+          <p class="text-white/50 text-sm leading-relaxed">
+            Freshly baked pizza made with love, quality ingredients, and a
+            secret recipe passed down for generations.
+          </p>
+        </div>
+        <!-- Links -->
+        <div>
+          <p
+            class="font-semibold uppercase tracking-widest text-sm text-white/40 mb-4"
+          >
+            Quick Links
+          </p>
+          <ul class="space-y-2 text-sm text-white/70">
+            <li>
+              <a href="index.html" class="hover:text-brand-orange transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a href="menu.html" class="hover:text-brand-orange transition"
+                >Menu</a
+              >
+            </li>
+            <li>
+              <a href="2d-game.html" class="hover:text-brand-orange transition"
+                >Mini Game</a
+              >
+            </li>
+            <li>
+              <a
+                href="order-form.html"
+                class="hover:text-brand-orange transition"
+                >Order Online</a
+              >
+            </li>
+          </ul>
+        </div>
+        <!-- Contact -->
+        <div>
+          <p
+            class="font-semibold uppercase tracking-widest text-sm text-white/40 mb-4"
+          >
+            Get In Touch
+          </p>
+          <ul class="space-y-2 text-sm text-white/70">
+            <li>📍 123 Pizza Lane, Cavite City</li>
+            <li>📞 +63 922 222 2222</li>
+            <li>✉️ GrammeowsterPizza@food.ph</li>
+            <li>🕑 Open Daily: 10 AM – 10 PM</li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="border-t border-white/10 pt-6 text-center text-white/30 text-xs"
+      >
+        © 2026 Grammeowster’s Pizza. All rights reserved. Made with 🍕 and ❤️
+      </div>
+    </footer>
+
+    <!-- ═══════════════ SCRIPTS ═══════════════ -->
+    <script>
+      // Sticky navbar style on scroll
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 60) {
+          navbar.classList.add("bg-brand-redDark", "shadow-xl", "py-3");
+          navbar.classList.remove("py-4");
+        } else {
+          navbar.classList.remove("bg-brand-redDark", "shadow-xl", "py-3");
+          navbar.classList.add("py-4");
+        }
+      });
+
+      // Mobile menu toggle
+      document.getElementById("menu-btn").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.remove("hidden");
+        document.getElementById("mobile-menu").classList.add("flex");
+      });
+      document.getElementById("close-menu").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.add("hidden");
+        document.getElementById("mobile-menu").classList.remove("flex");
+      });
+
+      // FAQ accordion
+      document.querySelectorAll(".faq-toggle").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const body = btn.nextElementSibling;
+          const icon = btn.querySelector(".faq-icon");
+          const isOpen = body.classList.contains("open");
+
+          // close all
+          document
+            .querySelectorAll(".faq-body")
+            .forEach((b) => b.classList.remove("open"));
+          document.querySelectorAll(".faq-icon").forEach((i) => {
+            i.textContent = "+";
+            i.classList.remove("rotate-45");
+          });
+
+          if (!isOpen) {
+            body.classList.add("open");
+            icon.textContent = "−";
+          }
+        });
+      });
+
+      // Scroll reveal
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      reveals.forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

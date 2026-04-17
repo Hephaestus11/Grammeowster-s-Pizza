@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="Img/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu | Grammeowster’s Pizza</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ['"Playfair Display"', "serif"],
+              body: ["Inter", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                red: "#c0392b",
+                redDark: "#96281b",
+                orange: "#e67e22",
+                cream: "#fdf6ec",
+                dark: "#1a0a00",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Playfair Display", serif;
+      }
+
+      .menu-card {
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .menu-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      .filter-btn {
+        transition: all 0.2s ease;
+      }
+      .filter-btn.active {
+        background-color: #c0392b;
+        color: white;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+
+  <body class="bg-brand-cream text-brand-dark antialiased">
+    <!-- NAVBAR -->
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 lg:px-16 flex justify-between items-center bg-brand-red shadow-xl"
+    >
+      <a href="index.html" class="flex items-center gap-2 text-white">
+        <img
+          src="Img/logo.png"
+          alt="Grammeowster's Pizza Logo"
+          class="h-32 w-32 object-contain"
+        />
+        <span class="font-heading text-2xl font-bold tracking-wide drop-shadow"
+          >Grammeowster’s Pizza</span
+        >
+      </a>
+      <ul
+        class="hidden md:flex gap-8 text-white font-medium text-sm tracking-widest uppercase"
+      >
+        <li>
+          <a href="index.html" class="hover:text-brand-orange transition"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            href="menu.html"
+            class="hover:text-brand-orange transition font-bold underline underline-offset-4"
+            >Menu</a
+          >
+        </li>
+        <li>
+          <a href="2d-game.html" class="hover:text-brand-orange transition"
+            >Game</a
+          >
+        </li>
+        <li>
+          <a
+            href="order-form.html"
+            class="bg-brand-orange hover:bg-orange-400 transition px-4 py-1.5 rounded-full text-white shadow-md"
+            >Order Now</a
+          >
+        </li>
+      </ul>
+      <button
+        id="menu-btn"
+        class="md:hidden text-white focus:outline-none p-1"
+        aria-label="Open menu"
+      >
+        <svg
+          class="w-7 h-7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="hidden fixed top-0 left-0 right-0 bottom-0 z-[60] bg-brand-redDark/95 flex-col items-center justify-center gap-8 text-white text-xl font-heading"
+    >
+      <button
+        id="close-menu"
+        class="absolute top-6 right-6 p-1"
+        aria-label="Close menu"
+      >
+        <svg
+          class="w-8 h-8"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <a href="index.html" class="hover:text-brand-orange transition">Home</a>
+      <a href="menu.html" class="text-brand-orange font-bold">Menu</a>
+      <a href="2d-game.html" class="hover:text-brand-orange transition">Game</a>
+      <a
+        href="order-form.html"
+        class="bg-brand-orange px-8 py-3 rounded-full hover:bg-orange-400 transition"
+        >Order Now</a
+      >
+    </div>
+
+    <!-- ═══ HERO BANNER ═══ -->
+    <section
+      class="pt-44 bg-gradient-to-br from-brand-red to-brand-redDark text-white text-center py-16 px-6 relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(230,126,34,0.2),_transparent_70%)]"
+      ></div>
+      <div class="relative z-10">
+        <p
+          class="text-black font-semibold tracking-[0.3em] uppercase text-xs mb-2"
+        >
+          Freshly Baked Daily
+        </p>
+        <h1 class="font-heading text-5xl font-black mb-3">Our Special Menu</h1>
+        <p class="text-white/70 max-w-md mx-auto text-sm">
+          Hand-crafted with love, brick-oven baked, and loaded with the finest
+          ingredients.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ FILTER TABS ═══ -->
+    <div
+      class="sticky top-[72px] z-40 bg-brand-cream/90 backdrop-blur border-b border-gray-200 py-4 px-6"
+    >
+      <div class="flex gap-3 justify-center flex-wrap" id="filter-bar">
+        <button
+          data-filter="all"
+          class="filter-btn active px-5 py-2 rounded-full text-sm font-semibold border border-brand-red text-brand-red"
+        >
+          All
+        </button>
+        <button
+          data-filter="classic"
+          class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-600 hover:border-brand-red hover:text-brand-red"
+        >
+          Classic
+        </button>
+        <button
+          data-filter="specialty"
+          class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-600 hover:border-brand-red hover:text-brand-red"
+        >
+          Specialty
+        </button>
+        <button
+          data-filter="vegetarian"
+          class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-600 hover:border-brand-red hover:text-brand-red"
+        >
+          Vegetarian
+        </button>
+        <button
+          data-filter="drinks"
+          class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-600 hover:border-brand-red hover:text-brand-red"
+        >
+          Drinks
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ MENU GRID ═══ -->
+    <main class="max-w-6xl mx-auto px-6 py-14">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        id="menu-grid"
+      >
+        <!-- Card: Pepperoni Overload -->
+        <article
+          class="menu-card reveal bg-white rounded-2xl overflow-hidden shadow-md"
+          data-category="classic"
+        >
+          <div class="relative">
+            <img
+              src=""
+              alt="Pepperoni Overload"
+              class="h-52 w-full object-cover"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div
+              class="h-52 bg-gradient-to-br from-gray-200 to-gray-300 hidden items-center justify-center flex-col gap-2 text-gray-400"
+            >
+              <svg
+                class="w-10 h-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                />
+              </svg>
+              <span class="text-sm font-medium"
+                ><img src="Img/pepperoni.png" alt="Pepperoni"
+              /></span>
+            </div>
+            <span
+              class="absolute top-3 left-3 bg-brand-red text-white text-xs font-bold px-3 py-1 rounded-full"
+              >Classic</span
+            >
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-1">
+              <h3 class="font-heading text-lg font-bold">Pepperoni Overload</h3>
+              <span class="text-brand-red font-bold text-lg">₱299</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+              Loaded with double layers of premium pepperoni on our signature
+              tomato base and mozzarella blend.
+            </p>
+            <a
+              href="order-form.html"
+              class="block text-center bg-brand-red hover:bg-brand-redDark text-white text-sm font-semibold py-2.5 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+              Add to Order
+            </a>
+          </div>
+        </article>
+
+        <!-- Card: Cheese Bomb -->
+        <article
+          class="menu-card reveal bg-white rounded-2xl overflow-hidden shadow-md"
+          data-category="specialty"
+          style="transition-delay: 0.05s"
+        >
+          <div class="relative">
+            <img
+              src=""
+              alt="Cheese Bomb"
+              class="h-52 w-full object-cover"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div
+              class="h-52 bg-gradient-to-br from-yellow-100 to-yellow-200 hidden items-center justify-center flex-col gap-2 text-yellow-400"
+            >
+              <svg
+                class="w-10 h-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                />
+              </svg>
+              <span class="text-sm font-medium"
+                ><img src="Img/Cheese Bomb.png" alt="Cheese Bomb"
+              /></span>
+            </div>
+            <span
+              class="absolute top-3 left-3 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-full"
+              >Specialty</span
+            >
+            <span
+              class="absolute top-3 right-3 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full"
+              >Best Seller</span
+            >
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-1">
+              <h3 class="font-heading text-lg font-bold">Cheese Bomb</h3>
+              <span class="text-brand-red font-bold text-lg">₱250</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+              Five types of cheese — mozzarella, cheddar, gouda, parmesan, and
+              cream cheese — all melted together.
+            </p>
+            <a
+              href="order-form.html"
+              class="block text-center bg-brand-red hover:bg-brand-redDark text-white text-sm font-semibold py-2.5 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+              Add to Order
+            </a>
+          </div>
+        </article>
+
+        <!-- Card: Veggie Delight -->
+        <article
+          class="menu-card reveal bg-white rounded-2xl overflow-hidden shadow-md"
+          data-category="vegetarian"
+          style="transition-delay: 0.1s"
+        >
+          <div class="relative">
+            <img
+              src=""
+              alt="Veggie Delight"
+              class="h-52 w-full object-cover"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div
+              class="h-52 bg-gradient-to-br from-green-100 to-green-200 hidden items-center justify-center flex-col gap-2 text-green-500"
+            >
+              <svg
+                class="w-10 h-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                />
+              </svg>
+              <span class="text-sm font-medium"
+                ><img src="Img/Veggie Pizza.png" alt="Veggie Delight"
+              /></span>
+            </div>
+            <span
+              class="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full"
+              >Vegetarian</span
+            >
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-1">
+              <h3 class="font-heading text-lg font-bold">Veggie Delight</h3>
+              <span class="text-brand-red font-bold text-lg">₱220</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+              Fresh garden vegetables — bell peppers, mushrooms, olives, and
+              spinach — on a light olive oil base.
+            </p>
+            <a
+              href="order-form.html"
+              class="block text-center bg-brand-red hover:bg-brand-redDark text-white text-sm font-semibold py-2.5 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+              Add to Order
+            </a>
+          </div>
+        </article>
+
+        <!-- Card: BBQ Chicken -->
+        <article
+          class="menu-card reveal bg-white rounded-2xl overflow-hidden shadow-md"
+          data-category="specialty"
+          style="transition-delay: 0.15s"
+        >
+          <div class="relative">
+            <img
+              src=""
+              alt="BBQ Chicken"
+              class="h-52 w-full object-cover"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div
+              class="h-52 bg-gradient-to-br from-orange-100 to-orange-200 hidden items-center justify-center flex-col gap-2 text-orange-500"
+            >
+              <svg
+                class="w-10 h-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                />
+              </svg>
+              <span class="text-sm font-medium"
+                ><img src="Img/sc-bbq-chicken-pizza.webp" alt="BBQ pizza"
+              /></span>
+            </div>
+            <span
+              class="absolute top-3 left-3 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-full"
+              >Specialty</span
+            >
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-1">
+              <h3 class="font-heading text-lg font-bold">BBQ Chicken</h3>
+              <span class="text-brand-red font-bold text-lg">₱279</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+              Smoky BBQ sauce base topped with grilled chicken strips, red
+              onions, and a drizzle of ranch dressing.
+            </p>
+            <a
+              href="order-form.html"
+              class="block text-center bg-brand-red hover:bg-brand-redDark text-white text-sm font-semibold py-2.5 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+              Add to Order
+            </a>
+          </div>
+        </article>
+
+        <!-- Card: Hawaiian -->
+        <article
+          class="menu-card reveal bg-white rounded-2xl overflow-hidden shadow-md"
+          data-category="classic"
+          style="transition-delay: 0.2s"
+        >
+          <div class="relative">
+            <img
+              src=""
+              alt="Hawaiian"
+              class="h-52 w-full object-cover"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div
+              class="h-52 bg-gradient-to-br from-yellow-50 to-orange-100 hidden items-center justify-center flex-col gap-2 text-yellow-500"
+            >
+              <svg
+                class="w-10 h-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                />
+              </svg>
+              <span class="text-sm font-medium"
+                ><img src="Img/Hawaiian.jpg" alt="Hawaiian"
+              /></span>
+            </div>
+            <span
+              class="absolute top-3 left-3 bg-brand-red text-white text-xs font-bold px-3 py-1 rounded-full"
+              >Classic</span
+            >
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-1">
+              <h3 class="font-heading text-lg font-bold">Hawaiian</h3>
+              <span class="text-brand-red font-bold text-lg">₱249</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+              Sweet pineapple chunks and savory ham — we don't judge your taste.
+              A classic crowd-pleaser.
+            </p>
+            <a
+              href="order-form.html"
+              class="block text-center bg-brand-red hover:bg-brand-redDark text-white text-sm font-semibold py-2.5 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+              Add to Order
+            </a>
+          </div>
+        </article>
+
+        <!-- Card: Soda -->
+        <article
+          class="menu-card reveal bg-white rounded-2xl overflow-hidden shadow-md"
+          data-category="drinks"
+          style="transition-delay: 0.25s"
+        >
+          <div class="relative">
+            <img
+              src=""
+              alt="Drinks & Soda"
+              class="h-52 w-full object-cover"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div
+              class="h-52 bg-gradient-to-br from-blue-50 to-blue-100 hidden items-center justify-center flex-col gap-2 text-blue-400"
+            >
+              <svg
+                class="w-10 h-10"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                />
+              </svg>
+              <span class="text-sm font-medium"
+                ><img src="Img/Drinks.png" alt="Drinks & Soda"
+              /></span>
+            </div>
+            <span
+              class="absolute top-3 left-3 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full"
+              >Drinks</span
+            >
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-1">
+              <h3 class="font-heading text-lg font-bold">Drinks &amp; Soda</h3>
+              <span class="text-brand-red font-bold text-lg">₱49</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+              Ice-cold sodas, iced tea, and bottled water. The perfect companion
+              to your pizza feast.
+            </p>
+            <a
+              href="order-form.html"
+              class="block text-center bg-brand-red hover:bg-brand-redDark text-white text-sm font-semibold py-2.5 rounded-full transition-all duration-300 hover:shadow-lg"
+            >
+              Add to Order
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Empty state (hidden by default) -->
+      <div id="empty-state" class="hidden text-center py-20 text-gray-400">
+        <p class="text-5xl mb-4">🍕</p>
+        <p class="text-lg font-semibold">No items in this category yet.</p>
+      </div>
+    </main>
+
+    <!-- ═══ CTA STRIP ═══ -->
+    <section class="bg-brand-dark text-white py-14 px-6 text-center">
+      <p
+        class="text-brand-orange text-sm font-semibold uppercase tracking-widest mb-2"
+      >
+        Hungry already?
+      </p>
+      <h2 class="font-heading text-3xl font-bold mb-4">
+        Ready to Place Your Order?
+      </h2>
+      <a
+        href="order-form.html"
+        class="inline-block bg-brand-orange hover:bg-orange-400 text-white font-bold px-10 py-3.5 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+      >
+        Order Now 🍕
+      </a>
+    </section>
+
+    <script>
+      // Mobile menu toggle
+      document.getElementById("menu-btn").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.remove("hidden");
+        document.getElementById("mobile-menu").classList.add("flex");
+      });
+      document.getElementById("close-menu").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.add("hidden");
+        document.getElementById("mobile-menu").classList.remove("flex");
+      });
+
+      // Category filter
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const cards = document.querySelectorAll("#menu-grid article");
+      const emptyState = document.getElementById("empty-state");
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filterBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const filter = btn.dataset.filter;
+          let visible = 0;
+
+          cards.forEach((card) => {
+            const match = filter === "all" || card.dataset.category === filter;
+            card.style.display = match ? "" : "none";
+            if (match) visible++;
+          });
+
+          emptyState.classList.toggle("hidden", visible > 0);
+        });
+      });
+
+      // Scroll reveal
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      reveals.forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

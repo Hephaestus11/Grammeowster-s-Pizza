@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="Img/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Now | Grammeowster’s Pizza</title>
+    <meta
+      name="description"
+      content="Place your pizza order at Grammeowster’s Pizza. Fast delivery, freshly baked, and loaded with cheese."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ['"Playfair Display"', "serif"],
+              body: ["Inter", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                red: "#c0392b",
+                redDark: "#96281b",
+                orange: "#e67e22",
+                cream: "#fdf6ec",
+                dark: "#1a0a00",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Playfair Display", serif;
+      }
+
+      .form-input {
+        width: 100%;
+        border: 2px solid #e5e7eb;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        outline: none;
+        background: #fff;
+      }
+      .form-input:focus {
+        border-color: #c0392b;
+        box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+      }
+
+      .qty-btn {
+        transition: background 0.15s;
+      }
+      .qty-btn:hover {
+        background: #c0392b;
+        color: white;
+      }
+
+      /* Success overlay */
+      #success-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: rgba(26, 10, 0, 0.7);
+        backdrop-filter: blur(4px);
+        align-items: center;
+        justify-content: center;
+      }
+      #success-overlay.show {
+        display: flex;
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0.7);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .pop-in {
+        animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      }
+    </style>
+  </head>
+
+  <body class="bg-brand-cream text-brand-dark antialiased">
+    <!-- ═══ NAVBAR ═══ -->
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 lg:px-16 flex justify-between items-center bg-brand-red shadow-xl"
+    >
+      <a href="index.html" class="flex items-center gap-2 text-white">
+        <img
+          src="Img/logo.png"
+          alt="Grammeowster's Pizza Logo"
+          class="h-32 w-32 object-contain"
+        />
+        <span class="font-heading text-2xl font-bold tracking-wide drop-shadow"
+          >Grammeowster’s Pizza</span
+        >
+      </a>
+      <ul
+        class="hidden md:flex gap-8 text-white font-medium text-sm tracking-widest uppercase"
+      >
+        <li>
+          <a href="index.html" class="hover:text-brand-orange transition"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a href="menu.html" class="hover:text-brand-orange transition"
+            >Menu</a
+          >
+        </li>
+        <li>
+          <a href="2d-game.html" class="hover:text-brand-orange transition"
+            >Game</a
+          >
+        </li>
+        <li>
+          <a
+            href="order-form.html"
+            class="bg-brand-orange ring-2 ring-white transition px-4 py-1.5 rounded-full text-white shadow-md"
+            >Order Now</a
+          >
+        </li>
+      </ul>
+      <button
+        id="menu-btn"
+        class="md:hidden text-white focus:outline-none p-1"
+        aria-label="Open menu"
+      >
+        <svg
+          class="w-7 h-7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="hidden fixed top-0 left-0 right-0 bottom-0 z-[60] bg-brand-redDark/95 flex-col items-center justify-center gap-8 text-white text-xl font-heading"
+    >
+      <button
+        id="close-menu"
+        class="absolute top-6 right-6 p-1"
+        aria-label="Close menu"
+      >
+        <svg
+          class="w-8 h-8"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <a href="index.html" class="hover:text-brand-orange transition">Home</a>
+      <a href="menu.html" class="hover:text-brand-orange transition">Menu</a>
+      <a href="2d-game.html" class="hover:text-brand-orange transition">Game</a>
+      <a
+        href="order-form.html"
+        class="bg-brand-orange px-8 py-3 rounded-full ring-2 ring-white"
+        >Order Now</a
+      >
+    </div>
+
+    <!-- ═══ PAGE HERO ═══ -->
+    <section
+      class="pt-44 bg-gradient-to-br from-brand-red to-brand-redDark text-white text-center py-12 px-6 relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(230,126,34,0.15),_transparent_70%)]"
+      ></div>
+      <div class="relative z-10">
+        <p
+          class="text-black font-semibold tracking-[0.3em] uppercase text-xs mb-2"
+        >
+          Ready to Eat?
+        </p>
+        <h1 class="font-heading text-4xl md:text-5xl font-black">
+          Place Your Order
+        </h1>
+        <p class="text-white/70 text-sm mt-2">
+          We'll have it piping hot at your door. 🍕
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main
+      class="max-w-5xl mx-auto px-4 py-12 grid lg:grid-cols-5 gap-8 items-start"
+    >
+      <!-- ─── ORDER FORM (left, 3/5) ─── -->
+      <div class="lg:col-span-3 bg-white rounded-2xl shadow-lg overflow-hidden">
+        <!-- Form Header -->
+        <div
+          class="bg-gradient-to-r from-brand-red to-brand-redDark px-8 py-5 text-white"
+        >
+          <h2 class="font-heading text-2xl font-bold">Your Details</h2>
+          <p class="text-white/70 text-sm mt-1">
+            Fill in the form below and we'll take care of the rest.
+          </p>
+        </div>
+
+        <form id="order-form" class="px-8 py-7 space-y-5">
+          <!-- Name -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5"
+              >Full Name <span class="text-brand-red">*</span></label
+            >
+            <input
+              id="f-name"
+              type="text"
+              class="form-input"
+              placeholder="e.g. Juan dela Cruz"
+              required
+            />
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5"
+              >Phone Number <span class="text-brand-red">*</span></label
+            >
+            <input
+              id="f-phone"
+              type="tel"
+              class="form-input"
+              placeholder="e.g. 09XX XXX XXXX"
+              required
+            />
+          </div>
+
+          <!-- Pizza Choice -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5"
+              >Pizza Choice <span class="text-brand-red">*</span></label
+            >
+            <select id="f-pizza" class="form-input" onchange="updateSummary()">
+              <option value="Pepperoni Overload|299">
+                🍕 Pepperoni Overload — ₱299
+              </option>
+              <option value="Cheese Bomb|250">🧀 Cheese Bomb — ₱250</option>
+              <option value="Veggie Delight|220">
+                🥦 Veggie Delight — ₱220
+              </option>
+              <option value="BBQ Chicken|279">🍗 BBQ Chicken — ₱279</option>
+              <option value="Hawaiian|249">🍍 Hawaiian — ₱249</option>
+            </select>
+          </div>
+
+          <!-- Size -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2"
+              >Size</label
+            >
+            <div class="grid grid-cols-3 gap-3" id="size-group">
+              <label class="size-opt">
+                <input
+                  type="radio"
+                  name="size"
+                  value="Small|0"
+                  class="sr-only"
+                  onchange="updateSummary()"
+                  checked
+                />
+                <div
+                  class="border-2 border-gray-200 rounded-xl p-3 text-center cursor-pointer hover:border-brand-red transition peer-checked:border-brand-red size-card selected"
+                >
+                  <p class="text-xl">🍕</p>
+                  <p class="font-semibold text-sm mt-1">Small</p>
+                  <p class="text-xs text-gray-400">6"</p>
+                </div>
+              </label>
+              <label class="size-opt">
+                <input
+                  type="radio"
+                  name="size"
+                  value="Medium|30"
+                  class="sr-only"
+                  onchange="updateSummary()"
+                />
+                <div
+                  class="border-2 border-gray-200 rounded-xl p-3 text-center cursor-pointer hover:border-brand-red transition size-card"
+                >
+                  <p class="text-2xl">🍕</p>
+                  <p class="font-semibold text-sm mt-1">Medium</p>
+                  <p class="text-xs text-gray-400">10" +₱30</p>
+                </div>
+              </label>
+              <label class="size-opt">
+                <input
+                  type="radio"
+                  name="size"
+                  value="Large|60"
+                  class="sr-only"
+                  onchange="updateSummary()"
+                />
+                <div
+                  class="border-2 border-gray-200 rounded-xl p-3 text-center cursor-pointer hover:border-brand-red transition size-card"
+                >
+                  <p class="text-3xl">🍕</p>
+                  <p class="font-semibold text-sm mt-1">Large</p>
+                  <p class="text-xs text-gray-400">14" +₱60</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Quantity -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5"
+              >Quantity</label
+            >
+            <div class="flex items-center gap-4">
+              <button
+                type="button"
+                id="qty-minus"
+                class="qty-btn w-10 h-10 rounded-full border-2 border-gray-300 text-xl font-bold flex items-center justify-center"
+              >
+                −
+              </button>
+              <span id="qty-display" class="text-xl font-bold w-8 text-center"
+                >1</span
+              >
+              <button
+                type="button"
+                id="qty-plus"
+                class="qty-btn w-10 h-10 rounded-full border-2 border-gray-300 text-xl font-bold flex items-center justify-center"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5"
+              >Delivery Address <span class="text-brand-red">*</span></label
+            >
+            <textarea
+              id="f-address"
+              rows="3"
+              class="form-input resize-none"
+              placeholder="House/Unit No., Street, Barangay, City"
+              required
+            ></textarea>
+          </div>
+
+          <!-- Notes -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5"
+              >Special Instructions
+              <span class="text-gray-400 font-normal">(optional)</span></label
+            >
+            <textarea
+              id="f-notes"
+              rows="2"
+              class="form-input resize-none"
+              placeholder="e.g. Extra cheese, no onions, ring the bell..."
+            ></textarea>
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="w-full bg-brand-red hover:bg-brand-redDark text-white font-bold py-3.5 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] text-base mt-2"
+          >
+            🍕 Confirm Order
+          </button>
+        </form>
+      </div>
+
+      <!-- ─── ORDER SUMMARY (right, 2/5) ─── -->
+      <div class="lg:col-span-2 space-y-5 lg:sticky lg:top-24">
+        <!-- Summary Card -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="bg-brand-dark px-6 py-4 text-white">
+            <h3 class="font-heading text-xl font-bold">Order Summary</h3>
+          </div>
+          <div class="px-6 py-5 space-y-3">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Pizza</span>
+              <span id="sum-pizza" class="font-semibold text-right max-w-[60%]"
+                >Pepperoni Overload</span
+              >
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Size</span>
+              <span id="sum-size" class="font-semibold">Small</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Quantity</span>
+              <span id="sum-qty" class="font-semibold">× 1</span>
+            </div>
+            <hr class="border-gray-100 my-1" />
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Subtotal</span>
+              <span id="sum-subtotal" class="font-semibold">₱299</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Delivery Fee</span>
+              <span class="font-semibold text-green-600">FREE</span>
+            </div>
+            <hr class="border-gray-100 my-1" />
+            <div class="flex justify-between text-base font-bold">
+              <span>Total</span>
+              <span id="sum-total" class="text-brand-red text-xl">₱299</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Card -->
+        <div
+          class="bg-white rounded-2xl shadow p-5 space-y-3 text-sm text-gray-600"
+        >
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">⏱️</span>
+            <div>
+              <p class="font-semibold text-brand-dark">Estimated Delivery</p>
+              <p>30 – 45 minutes after ordering</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">💳</span>
+            <div>
+              <p class="font-semibold text-brand-dark">Payment</p>
+              <p>Cash on Delivery accepted</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">📞</span>
+            <div>
+              <p class="font-semibold text-brand-dark">Questions?</p>
+              <p>Call us: +63 922 222 2222</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ═══ SUCCESS OVERLAY ═══ -->
+    <div id="success-overlay">
+      <div
+        class="pop-in bg-white rounded-3xl shadow-2xl p-10 mx-4 max-w-sm text-center"
+      >
+        <div class="text-7xl mb-4">🎉</div>
+        <h2 class="font-heading text-3xl font-black text-brand-red mb-2">
+          Order Placed!
+        </h2>
+        <p class="text-gray-600 text-sm mb-6">
+          Thank you! Your pizza is being prepared. Expect delivery in
+          <strong>30–45 minutes</strong>.
+        </p>
+        <a
+          href="index.html"
+          class="inline-block bg-brand-red hover:bg-brand-redDark text-white font-bold px-8 py-3 rounded-full transition"
+        >
+          Back to Home
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // ── Mobile menu ──
+      document.getElementById("menu-btn").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.remove("hidden");
+        document.getElementById("mobile-menu").classList.add("flex");
+      });
+      document.getElementById("close-menu").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.add("hidden");
+        document.getElementById("mobile-menu").classList.remove("flex");
+      });
+
+      // ── Quantity ──
+      let qty = 1;
+      document.getElementById("qty-minus").addEventListener("click", () => {
+        if (qty > 1) {
+          qty--;
+          document.getElementById("qty-display").textContent = qty;
+          updateSummary();
+        }
+      });
+      document.getElementById("qty-plus").addEventListener("click", () => {
+        if (qty < 20) {
+          qty++;
+          document.getElementById("qty-display").textContent = qty;
+          updateSummary();
+        }
+      });
+
+      // ── Size card highlight ──
+      document.querySelectorAll(".size-opt input").forEach((radio) => {
+        radio.addEventListener("change", () => {
+          document.querySelectorAll(".size-card").forEach((c) => {
+            c.classList.remove("selected", "border-brand-red", "bg-red-50");
+            c.classList.add("border-gray-200");
+          });
+          const card = radio.closest(".size-opt").querySelector(".size-card");
+          card.classList.add("selected", "border-brand-red", "bg-red-50");
+          card.classList.remove("border-gray-200");
+        });
+      });
+
+      // ── Summary update ──
+      function updateSummary() {
+        const pizzaVal = document.getElementById("f-pizza").value.split("|");
+        const pizzaName = pizzaVal[0];
+        const pizzaPrice = parseInt(pizzaVal[1]);
+
+        const sizeRadio = document.querySelector('input[name="size"]:checked');
+        const sizeVal = sizeRadio ? sizeRadio.value.split("|") : ["Small", "0"];
+        const sizeName = sizeVal[0];
+        const sizeExtra = parseInt(sizeVal[1]);
+
+        const total = (pizzaPrice + sizeExtra) * qty;
+
+        document.getElementById("sum-pizza").textContent = pizzaName;
+        document.getElementById("sum-size").textContent = sizeName;
+        document.getElementById("sum-qty").textContent = "× " + qty;
+        document.getElementById("sum-subtotal").textContent = "₱" + total;
+        document.getElementById("sum-total").textContent = "₱" + total;
+      }
+
+      updateSummary();
+
+      // ── Form submit ──
+      document.getElementById("order-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const overlay = document.getElementById("success-overlay");
+        overlay.classList.add("show");
+      });
+    </script>
+  </body>
+</html>
